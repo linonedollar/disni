@@ -1218,8 +1218,9 @@
     let currentDay = 'day1';
     let currentFilter = 'all';
     
-    // Cloud Sync Configuration
-    let cloudApiUrl = localStorage.getItem('sg_cloud_api_url') || '';
+    // Cloud Sync Configuration (Pre-configured with user's Google Sheet Web App)
+    const DEFAULT_API_URL = 'https://script.google.com/macros/s/AKfycbySOFFeVQSKPk3kbrOfySGV0VEQiDnBq_3rJfC623QHK5W44BFcUePsqCssQYjHuMdTHQ/exec';
+    let cloudApiUrl = localStorage.getItem('sg_cloud_api_url') || DEFAULT_API_URL;
     
     // Check Status Store: { taskId: boolean, itemId_day: boolean }
     const STORAGE_KEY_STATE = 'sg_trip_task_state_v2';
