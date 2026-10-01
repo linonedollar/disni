@@ -6,8 +6,8 @@
   <meta name="theme-color" content="#0f172a">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="新加坡Day1行程">
-  <title>Day 1 新加坡啟航 ＆ 影音特輯行程表</title>
+  <meta name="apple-mobile-web-app-title" content="新加坡迪士尼特輯">
+  <title>新加坡 ＆ 迪士尼郵輪探險 - 旅遊影音手冊</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,7 +34,6 @@
       --border: #e2e8f0;
       --radius: 18px;
       --shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
-      --shadow-hover: 0 10px 25px -4px rgba(15, 23, 42, 0.1);
     }
 
     @media (prefers-color-scheme: dark) {
@@ -74,52 +73,64 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(15, 23, 42, 0.88);
+      background: rgba(15, 23, 42, 0.92);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       color: #fff;
-      padding: calc(12px + env(safe-area-inset-top)) 18px 14px;
+      padding: calc(10px + env(safe-area-inset-top)) 16px 12px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     }
 
     .header-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
-    .badge-date {
+    .sync-status-badge {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      background: rgba(255, 255, 255, 0.15);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      padding: 4px 10px;
+      gap: 5px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 3px 8px;
       border-radius: 999px;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      color: #38bdf8;
+      font-size: 11px;
+      font-weight: 600;
+      color: #94a3b8;
+      cursor: pointer;
+    }
+
+    .sync-status-badge.synced {
+      color: #34d399;
+      background: rgba(16, 185, 129, 0.15);
+      border-color: rgba(52, 211, 153, 0.4);
+    }
+
+    .sync-status-badge.syncing {
+      color: #fbbf24;
+      background: rgba(245, 158, 11, 0.15);
+      border-color: rgba(251, 191, 36, 0.4);
     }
 
     .header-actions {
       display: flex;
-      gap: 8px;
+      gap: 6px;
     }
 
     .icon-btn {
       background: rgba(255, 255, 255, 0.12);
       border: 1px solid rgba(255, 255, 255, 0.18);
       color: #fff;
-      width: 36px;
-      height: 36px;
+      width: 34px;
+      height: 34px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 15px;
+      font-size: 14px;
       cursor: pointer;
       transition: all 0.2s ease;
     }
@@ -130,7 +141,7 @@
     }
 
     .header-title {
-      font-size: 20px;
+      font-size: 19px;
       font-weight: 800;
       letter-spacing: -0.5px;
       line-height: 1.3;
@@ -140,12 +151,42 @@
       -webkit-text-fill-color: transparent;
     }
 
-    .header-sub {
+    /* Day Tabs Navigation (Horizontal Scroll) */
+    .day-tabs-scroll {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      margin-top: 10px;
+      padding-bottom: 2px;
+    }
+
+    .day-tabs-scroll::-webkit-scrollbar {
+      display: none;
+    }
+
+    .day-tab-pill {
+      flex-shrink: 0;
+      padding: 6px 12px;
+      border-radius: 12px;
       font-size: 12px;
-      color: #94a3b8;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #cbd5e1;
+      cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
+      transition: all 0.2s ease;
+    }
+
+    .day-tab-pill.active {
+      background: #0284c7;
+      color: #ffffff;
+      border-color: #38bdf8;
+      box-shadow: 0 2px 10px rgba(2, 132, 199, 0.4);
     }
 
     /* Progress Bar */
@@ -181,9 +222,9 @@
       transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* Filter Tabs */
+    /* Filter Chips */
     .filter-scroll-wrapper {
-      padding: 12px 16px;
+      padding: 10px 16px;
       overflow-x: auto;
       scrollbar-width: none;
       -webkit-overflow-scrolling: touch;
@@ -197,18 +238,17 @@
 
     .filter-chip {
       flex-shrink: 0;
-      padding: 8px 14px;
+      padding: 7px 13px;
       border-radius: 999px;
-      font-size: 13px;
-      font-weight: 600;
+      font-size: 12px;
+      font-weight: 700;
       border: 1px solid var(--border);
       background: var(--card-bg);
       color: var(--text-muted);
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      transition: all 0.2s ease;
+      gap: 5px;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
     }
 
@@ -216,51 +256,40 @@
       background: var(--primary);
       color: #ffffff;
       border-color: var(--primary);
-      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.35);
-      transform: translateY(-1px);
+      box-shadow: 0 3px 10px rgba(2, 132, 199, 0.35);
     }
 
-    /* Container */
+    /* Main Container */
     .main-content {
       max-width: 680px;
       margin: 0 auto;
       padding: 0 16px;
     }
 
-    /* Section Highlights Card */
+    /* Highlight Banner */
     .quick-overview-card {
       background: linear-gradient(135deg, #0284c7 0%, #0369a1 60%, #1e1b4b 100%);
       color: white;
       border-radius: var(--radius);
-      padding: 18px 20px;
-      margin-bottom: 20px;
-      box-shadow: 0 10px 25px -5px rgba(2, 132, 199, 0.4);
+      padding: 16px 18px;
+      margin-bottom: 18px;
+      box-shadow: 0 8px 20px -4px rgba(2, 132, 199, 0.4);
       position: relative;
       overflow: hidden;
     }
 
-    .quick-overview-card::after {
-      content: '🚢';
-      position: absolute;
-      right: -10px;
-      bottom: -15px;
-      font-size: 80px;
-      opacity: 0.12;
-      pointer-events: none;
-    }
-
     .quick-overview-title {
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 800;
       display: flex;
       align-items: center;
       gap: 8px;
-      margin-bottom: 6px;
+      margin-bottom: 5px;
     }
 
     .quick-overview-text {
-      font-size: 13px;
-      opacity: 0.92;
+      font-size: 12.5px;
+      opacity: 0.94;
       line-height: 1.5;
     }
 
@@ -282,7 +311,7 @@
 
     .timeline-item {
       position: relative;
-      margin-bottom: 24px;
+      margin-bottom: 22px;
       transition: all 0.3s ease;
     }
 
@@ -306,18 +335,16 @@
       box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.3);
     }
 
-    /* Card */
     .event-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 18px;
+      padding: 16px;
       box-shadow: var(--shadow);
-      transition: transform 0.2s, box-shadow 0.2s;
     }
 
     .timeline-item.completed .event-card {
-      opacity: 0.75;
+      opacity: 0.78;
       border-color: #cbd5e1;
     }
 
@@ -332,20 +359,14 @@
     .time-slot {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      font-size: 13px;
+      gap: 5px;
+      font-size: 12.5px;
       font-weight: 800;
       color: var(--primary);
       background: var(--primary-light);
-      padding: 3px 10px;
+      padding: 3px 9px;
       border-radius: 8px;
       letter-spacing: -0.3px;
-    }
-
-    .card-actions {
-      display: flex;
-      align-items: center;
-      gap: 8px;
     }
 
     .check-btn {
@@ -360,6 +381,8 @@
       cursor: pointer;
       color: transparent;
       transition: all 0.2s ease;
+      font-weight: 800;
+      font-size: 14px;
     }
 
     .timeline-item.completed .check-btn {
@@ -369,7 +392,7 @@
     }
 
     .card-title {
-      font-size: 16px;
+      font-size: 15.5px;
       font-weight: 800;
       line-height: 1.4;
       margin-bottom: 10px;
@@ -381,13 +404,13 @@
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .tag {
       font-size: 11px;
       font-weight: 700;
-      padding: 2px 8px;
+      padding: 2px 7px;
       border-radius: 6px;
       display: inline-flex;
       align-items: center;
@@ -399,21 +422,21 @@
     .tag-food { background: var(--gold-soft); color: var(--gold); }
     .tag-hotel { background: var(--green-soft); color: var(--green); }
 
-    /* Shoot Action Item Checklist */
+    /* Task checklist */
     .task-list {
       display: flex;
       flex-direction: column;
       gap: 8px;
-      margin-top: 10px;
+      margin-top: 8px;
     }
 
     .task-item {
       background: rgba(15, 23, 42, 0.02);
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 10px 12px;
+      padding: 9px 11px;
       display: flex;
-      gap: 10px;
+      gap: 9px;
       align-items: flex-start;
       font-size: 13px;
       line-height: 1.5;
@@ -446,6 +469,8 @@
       flex-shrink: 0;
       cursor: pointer;
       color: transparent;
+      font-size: 11px;
+      font-weight: 800;
       transition: all 0.15s;
     }
 
@@ -460,60 +485,64 @@
       color: var(--text-main);
     }
 
-    .task-text strong {
-      color: var(--text-main);
-      font-weight: 700;
-    }
-
     .task-text.strike {
       text-decoration: line-through;
       color: var(--text-muted);
     }
 
-    /* Step flow numbered */
     .step-number {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 20px;
-      height: 20px;
+      width: 19px;
+      height: 19px;
       background: var(--purple);
       color: #fff;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 800;
       border-radius: 50%;
-      margin-right: 6px;
+      margin-right: 5px;
       flex-shrink: 0;
     }
 
-    /* Location Map Button */
+    .location-subcard {
+      background: rgba(15, 23, 42, 0.02);
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin: 8px 0;
+      border: 1px solid var(--border);
+    }
+
+    .location-subtitle {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
     .card-footer {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: 14px;
-      padding-top: 12px;
+      margin-top: 12px;
+      padding-top: 10px;
       border-top: 1px dashed var(--border);
     }
 
     .map-btn {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
       background: rgba(2, 132, 199, 0.08);
       color: var(--primary);
       font-size: 12px;
       font-weight: 700;
-      padding: 6px 12px;
+      padding: 5px 11px;
       border-radius: 8px;
       text-decoration: none;
-      transition: all 0.2s ease;
-    }
-
-    .map-btn:active {
-      background: var(--primary);
-      color: #fff;
-      transform: scale(0.96);
     }
 
     .expand-btn {
@@ -522,30 +551,25 @@
       font-size: 12px;
       color: var(--text-muted);
       cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
       font-weight: 600;
-      padding: 4px;
     }
 
-    /* Floating Navigation / Bottom Dock */
+    /* Bottom Dock */
     .bottom-dock {
       position: fixed;
-      bottom: calc(16px + env(safe-area-inset-bottom));
+      bottom: calc(14px + env(safe-area-inset-bottom));
       left: 50%;
       transform: translateX(-50%);
       z-index: 99;
-      background: rgba(15, 23, 42, 0.9);
+      background: rgba(15, 23, 42, 0.92);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: 999px;
-      padding: 6px 10px;
+      padding: 5px 8px;
       display: flex;
-      gap: 6px;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-      width: calc(100% - 36px);
+      width: calc(100% - 32px);
       max-width: 440px;
       justify-content: space-around;
     }
@@ -557,29 +581,27 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 3px;
-      padding: 6px 12px;
+      gap: 2px;
+      padding: 6px 10px;
       border-radius: 999px;
-      font-size: 11px;
+      font-size: 10.5px;
       font-weight: 700;
       cursor: pointer;
-      transition: all 0.2s ease;
     }
 
-    .dock-btn.active, .dock-btn:active {
+    .dock-btn:active {
       color: #38bdf8;
-      background: rgba(255, 255, 255, 0.1);
     }
 
     .dock-icon {
-      font-size: 16px;
+      font-size: 15px;
     }
 
-    /* Modal / Bottom Sheet for QR & Tips */
+    /* Modals */
     .modal-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.6);
+      background: rgba(0, 0, 0, 0.65);
       backdrop-filter: blur(4px);
       -webkit-backdrop-filter: blur(4px);
       z-index: 200;
@@ -599,7 +621,7 @@
       max-width: 500px;
       max-height: 85vh;
       overflow-y: auto;
-      padding: 24px 20px calc(24px + env(safe-area-inset-bottom));
+      padding: 22px 18px calc(24px + env(safe-area-inset-bottom));
       box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.25);
       animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
@@ -614,11 +636,11 @@
       height: 4px;
       background: #cbd5e1;
       border-radius: 999px;
-      margin: 0 auto 16px;
+      margin: 0 auto 14px;
     }
 
     .modal-title {
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 800;
       margin-bottom: 12px;
       display: flex;
@@ -626,43 +648,54 @@
       gap: 8px;
     }
 
-    .qr-container {
-      text-align: center;
-      padding: 20px;
-      background: #f1f5f9;
-      border-radius: 16px;
-      margin: 14px 0;
-    }
-
-    .qr-code-img {
-      width: 200px;
-      height: 200px;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-      background: #fff;
-      padding: 8px;
-    }
-
     .tip-box {
       background: var(--primary-light);
       border-left: 4px solid var(--primary);
-      padding: 12px 14px;
+      padding: 11px 13px;
       border-radius: 10px;
-      font-size: 13px;
-      margin-bottom: 12px;
+      font-size: 12.5px;
+      margin-bottom: 10px;
     }
 
     .btn-full {
       width: 100%;
-      padding: 14px;
-      border-radius: 14px;
+      padding: 13px;
+      border-radius: 12px;
       background: var(--primary);
       color: white;
       border: none;
-      font-size: 15px;
+      font-size: 14.5px;
       font-weight: 700;
       cursor: pointer;
       margin-top: 10px;
+    }
+
+    /* Input Box for Sheet URL */
+    .input-group {
+      margin-bottom: 14px;
+    }
+
+    .input-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .text-input {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text-main);
+      font-size: 13px;
+      outline: none;
+    }
+
+    .text-input:focus {
+      border-color: var(--primary);
     }
 
     /* Toast Notification */
@@ -673,9 +706,9 @@
       transform: translateX(-50%) translateY(-100px);
       background: rgba(15, 23, 42, 0.95);
       color: white;
-      padding: 10px 18px;
+      padding: 9px 16px;
       border-radius: 999px;
-      font-size: 13px;
+      font-size: 12.5px;
       font-weight: 600;
       z-index: 300;
       box-shadow: 0 10px 25px rgba(0,0,0,0.3);
@@ -683,36 +716,17 @@
       pointer-events: none;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
 
     .toast.show {
       transform: translateX(-50%) translateY(0);
     }
-
-    /* Sub-cards / Details accordion */
-    .location-subcard {
-      background: rgba(15, 23, 42, 0.03);
-      border-radius: 12px;
-      padding: 10px 12px;
-      margin: 8px 0;
-      border: 1px solid var(--border);
-    }
-
-    .location-subtitle {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--primary);
-      margin-bottom: 6px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
   </style>
 </head>
 <body>
 
-  <!-- Toast Notification -->
+  <!-- Toast -->
   <div id="toast" class="toast">
     <span>✅ 已記錄狀態</span>
   </div>
@@ -720,27 +734,43 @@
   <!-- Header -->
   <header>
     <div class="header-top">
-      <div class="badge-date">
-        <span>📍 DAY 1</span>
-        <span>•</span>
-        <span>10/21（三）</span>
+      <div class="sync-status-badge" id="sync-badge" onclick="openCloudModal()">
+        <span id="sync-icon">☁️</span>
+        <span id="sync-text">連線同步中...</span>
       </div>
       <div class="header-actions">
         <button class="icon-btn" onclick="openTipsModal()" title="拍攝秘笈">💡</button>
-        <button class="icon-btn" onclick="openShareModal()" title="手機分享/QR Code">📱</button>
+        <button class="icon-btn" onclick="openCloudModal()" title="Google Sheet 設定">📊</button>
+        <button class="icon-btn" onclick="openShareModal()" title="手機QR Code">📱</button>
         <button class="icon-btn" onclick="resetAllProgress()" title="重置進度">🔄</button>
       </div>
     </div>
     
-    <h1 class="header-title">桃園啟航 ✈️ 新加坡探險</h1>
-    <div class="header-sub">
-      <span>星耀樟宜</span> • <span>香格里拉聖淘沙</span> • <span>卡丁車</span> • <span>肉骨茶</span>
+    <h1 class="header-title" id="page-day-title">桃園啟航 ✈️ 新加坡探險</h1>
+
+    <!-- Day Selector Pills (Horizontal Scroll) -->
+    <div class="day-tabs-scroll" id="day-tabs-container">
+      <button class="day-tab-pill active" onclick="switchDay('day1', this)">
+        <span>📍 Day 1（10/21）啟航・聖淘沙</span>
+      </button>
+      <button class="day-tab-pill" onclick="switchDay('day2', this)">
+        <span>🚢 Day 2（10/22）迪士尼登船日</span>
+      </button>
+      <button class="day-tab-pill" onclick="switchDay('day3', this)">
+        <span>✨ Day 3（10/23）海上巡航探險</span>
+      </button>
+      <button class="day-tab-pill" onclick="switchDay('day4', this)">
+        <span>🎉 Day 4（10/24）狂歡大秀</span>
+      </button>
+      <button class="day-tab-pill" onclick="switchDay('day5', this)">
+        <span>🏠 Day 5（10/25）返航回台</span>
+      </button>
     </div>
 
-    <!-- Progress -->
+    <!-- Progress Bar -->
     <div class="progress-section">
       <div class="progress-info">
-        <span>行程進度 Check-in</span>
+        <span id="progress-day-label">Day 1 行程進度 Check-in</span>
         <span id="progress-percent">0% (0/10)</span>
       </div>
       <div class="progress-bar-container">
@@ -769,479 +799,23 @@
   <div class="main-content">
     
     <!-- Top Summary Banner -->
-    <div class="quick-overview-card">
+    <div class="quick-overview-card" id="day-overview-card">
       <div class="quick-overview-title">
-        <span>✨ 今日重點任務提醒</span>
+        <span id="overview-badge-title">✨ Day 1 重點任務提醒</span>
       </div>
-      <div class="quick-overview-text">
+      <div class="quick-overview-text" id="overview-badge-desc">
         桃園 05:00 報到 ➔ 星耀樟宜順向俯拍瀑布 ➔ 香格里拉海景蜜月 Room Tour ➔ 17:00 HyperDrive 霓虹賽車 ➔ 松發肉骨茶續湯補體力，備戰明天迪士尼郵輪！
       </div>
     </div>
 
-    <!-- Timeline List -->
+    <!-- Timeline Container (Dynamically rendered based on active Day) -->
     <div class="timeline" id="timeline-container">
-
-      <!-- Item 1: 桃園機場 -->
-      <div class="timeline-item" data-category="shoot transit" id="item-1">
-        <div class="timeline-dot"></div>
-        <div class="event-card">
-          <div class="card-top">
-            <span class="time-slot">⏰ 05:00 - 08:00</span>
-            <div class="card-actions">
-              <button class="check-btn" onclick="toggleItemComplete(1)">✓</button>
-            </div>
-          </div>
-          <h2 class="card-title">桃園國際機場第二航廈（影音拍攝與順暢報到）</h2>
-          
-          <div class="tag-list">
-            <span class="tag tag-transit">🛫 機場報到</span>
-            <span class="tag tag-shoot">🎬 影音開場特輯</span>
-          </div>
-
-          <div class="task-list">
-            <div class="task-item">
-              <div class="task-checkbox" onclick="toggleTask(this, 't1-1')">✓</div>
-              <div class="task-text"><strong>05:00</strong> 抵達第二航廈辦理星宇航空報到、托運行李並順暢通關。</div>
-            </div>
-
-            <div class="task-item shoot-task">
-              <div class="task-checkbox" onclick="toggleTask(this, 't1-2')">✓</div>
-              <div class="task-text">
-                🎬 <strong>【手拿鏡放大轉場】</strong>：候機室落地窗前，對準手拿鏡映出兩位手持護照與機票的甜蜜合照，鏡頭快速拉近放大。
-              </div>
-            </div>
-
-            <div class="task-item shoot-task">
-              <div class="task-checkbox" onclick="toggleTask(this, 't1-3')">✓</div>
-              <div class="task-text">
-                🎬 <strong>【雙人邁步街拍】</strong>：在二航廈 D 區著名的<strong>「文學之牆」</strong>前，拍攝兩人牽手推行李邁步前進的隨性流暢畫面。
-              </div>
-            </div>
-
-            <div class="task-item shoot-task">
-              <div class="task-checkbox" onclick="toggleTask(this, 't1-4')">✓</div>
-              <div class="task-text">
-                🎬 <strong>【定點拉走轉場】</strong>：在<strong>「文學之牆」</strong>前，一個人站在原地看鏡頭，另一個人伸手將他/她拉出鏡頭外！
-              </div>
-            </div>
-          </div>
-
-          <div class="card-footer">
-            <a href="https://maps.google.com/?q=桃園國際機場第二航廈" target="_blank" class="map-btn">
-              📍 桃園機場 T2 導航
-            </a>
-            <button class="expand-btn" onclick="copyCardContent('item-1')">📋 複製內容</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Item 2: 星宇航空 -->
-      <div class="timeline-item" data-category="shoot transit" id="item-2">
-        <div class="timeline-dot"></div>
-        <div class="event-card">
-          <div class="card-top">
-            <span class="time-slot">⏰ 08:00 - 12:40</span>
-            <div class="card-actions">
-              <button class="check-btn" onclick="toggleItemComplete(2)">✓</button>
-            </div>
-          </div>
-          <h2 class="card-title">星宇航空前往新加坡（高空雲霄 ＆ 縮時特輯）</h2>
-          
-          <div class="tag-list">
-            <span class="tag tag-transit">✈️ STARLUX</span>
-            <span class="tag tag-shoot">🎬 起降縮時</span>
-          </div>
-
-          <div class="task-list">
-            <div class="task-item shoot-task">
-              <div class="task-checkbox" onclick="toggleTask(this, 't2-1')">✓</div>
-              <div class="task-text">
-                🎬 <strong>【起降窗景縮時 Time-lapse】</strong>：手機固定於舷窗，記錄桃園機場 08:00 起飛衝向雲霄，以及 12:40 降落新加坡俯瞰海岸線與雨林城市的震撼縮時！
-              </div>
-            </div>
-            <div class="task-item">
-              <div class="task-checkbox" onclick="toggleTask(this, 't2-2')">✓</div>
-              <div class="task-text">🍱 飛行途中享用精緻機上餐，降落後無需額外吃午餐。</div>
-            </div>
-          </div>
-
-          <div class="card-footer">
-            <span style="font-size:12px; color:var(--text-muted)">航程約 4 小時 40 分</span>
-            <button class="expand-btn" onclick="copyCardContent('item-2')">📋 複製內容</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Item 3: 樟宜機場 T1 -->
-      <div class="timeline-item" data-category="transit" id="item-3">
-        <div class="timeline-dot"></div>
-        <div class="event-card">
-          <div class="card-top">
-            <span class="time-slot">⏰ 12:40 - 13:40</span>
-            <div class="card-actions">
-              <button class="check-btn" onclick="toggleItemComplete(3)">✓</button>
-            </div>
-          </div>
-          <h2 class="card-title">樟宜機場第一航廈（T1）入境通關與提領行李</h2>
-          
-          <div class="tag-list">
-            <span class="tag tag-transit">🛃 入境通關</span>
-            <span class="tag tag-transit">🧳 提領行李</span>
-          </div>
-
-          <div class="task-list">
-            <div class="task-item">
-              <div class="task-checkbox" onclick="toggleTask(this, 't3-1')">✓</div>
-              <div class="task-text">辦理入境通關手續與提領行李。</div>
-            </div>
-            <div class="task-item transit-step">
-              <div class="task-checkbox" onclick="toggleTask(this, 't3-2')">✓</div>
-              <div class="task-text"><strong>順向指引：</strong>出一樓抵達大廳（Arrival Hall），正對面即是星耀樟宜（Jewel）入口，直接步行即達！</div>
-            </div>
-          </div>
-
-          <div class="card-footer">
-            <a href="https://maps.google.com/?q=Changi+Airport+Terminal+1" target="_blank" class="map-btn">
-              📍 樟宜 T1 導航
-            </a>
-            <button class="expand-btn" onclick="copyCardContent('item-3')">📋 複製內容</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Item 4: 星耀樟宜 Jewel -->
-      <div class="timeline-item" data-category="shoot food" id="item-4">
-        <div class="timeline-dot"></div>
-        <div class="event-card">
-          <div class="card-top">
-            <span class="time-slot">⏰ 13:40 - 14:45</span>
-            <div class="card-actions">
-              <button class="check-btn" onclick="toggleItemComplete(4)">✓</button>
-            </div>
-          </div>
-          <h2 class="card-title">星耀樟宜（Jewel）雨林瀑布（由上往下順向動線：拍照＋影片）</h2>
-          
-          <div class="tag-list">
-            <span class="tag tag-shoot">📸 瀑布卡點拍</span>
-            <span class="tag tag-food">☕ 咖椰吐司</span>
-            <span class="tag tag-food">🛍️ 魚尾獅米奇</span>
-          </div>
-
-          <!-- Section A -->
-          <div class="location-subcard">
-            <div class="location-subtitle">📍 拍攝地點 A：5 樓 Canopy Park 頂層觀景位（搭電梯直達 5 樓）</div>
-            <div class="task-item shoot-task">
-              <div class="task-checkbox" onclick="toggleTask(this, 't4-a')">✓</div>
-              <div class="task-text">📸 <strong>【雨林谷全景與輕軌同框】</strong>：俯瞰雨林谷全景，抓準高空輕軌（Skytrain）穿越瀑布與綠意的瞬間，拍出震撼神級大片！</div>
-            </div>
-          </div>
-
-          <!-- Section B -->
-          <div class="location-subcard">
-            <div class="location-subtitle">📍 拍攝地點 B：2 樓 / 3 樓中層觀景平台（核心影音基地）</div>
-            <div class="task-list">
-              <div class="task-item shoot-task">
-                <div class="task-checkbox" onclick="toggleTask(this, 't4-b1')">✓</div>
-                <div class="task-text">📸 <strong>【水柱平視合照】</strong>：與直瀉而下的水柱平視合照（自然光充足，適合拍兩位牽手側影或半身美照）。</div>
-              </div>
-              <div class="task-item shoot-task">
-                <div class="task-checkbox" onclick="toggleTask(this, 't4-b2')">✓</div>
-                <div class="task-text">🎬 <strong>【手拿鏡放大轉場】</strong>：觀景平台欄杆前，手拿鏡滿版映出瀑布水流，鏡頭推近放大切換全景。</div>
-              </div>
-              <div class="task-item shoot-task">
-                <div class="task-checkbox" onclick="toggleTask(this, 't4-b3')">✓</div>
-                <div class="task-text">🎬 <strong>【雙人邁步街拍】</strong>：平台前拍攝兩位牽手邁步行進畫面（作為桃園機場邁步的第二段卡點銜接）。</div>
-              </div>
-              <div class="task-item shoot-task">
-                <div class="task-checkbox" onclick="toggleTask(this, 't4-b4')">✓</div>
-                <div class="task-text">🎬 <strong>【定點拉走轉場】</strong>：一人站原地看瀑布，另一人伸手將他/她拉出鏡頭外（桃園機場拉走第二段卡點銜接）。</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Section C -->
-          <div class="location-subcard">
-            <div class="location-subtitle">📍 採買地點 C：B1 樓 MINISO（電梯下至 B1 樓）</div>
-            <div class="task-item food-task">
-              <div class="task-checkbox" onclick="toggleTask(this, 't4-c')">✓</div>
-              <div class="task-text">🛍️ <strong>快閃採買：</strong>購入限定版「魚尾獅米奇」公仔！</div>
-            </div>
-          </div>
-
-          <!-- Section D -->
-          <div class="location-subcard">
-            <div class="location-subtitle">📍 拍攝與美食地點 D：B2 樓水旋渦透明底座（電梯下至 B2 樓）</div>
-            <div class="task-list">
-              <div class="task-item shoot-task">
-                <div class="task-checkbox" onclick="toggleTask(this, 't4-d1')">✓</div>
-                <div class="task-text">📸 <strong>【巨型水旋渦底座】</strong>：近距離觀賞水流在透明巨型圓柱內急速旋轉落下的科幻夢幻感。</div>
-              </div>
-              <div class="task-item food-task">
-                <div class="task-checkbox" onclick="toggleTask(this, 't4-d2')">✓</div>
-                <div class="task-text">☕️ <strong>【美味彈性加碼：亞坤咖椰吐司】</strong>：若此時稍微有點餓，可在 B2 亞坤點香酥咖椰吐司與熱奶茶先墊墊胃；若不餓留待後續陸地早餐享用！</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="card-footer">
-            <a href="https://maps.google.com/?q=Jewel+Changi+Airport" target="_blank" class="map-btn">
-              📍 星耀樟宜導航
-            </a>
-            <button class="expand-btn" onclick="copyCardContent('item-4')">📋 複製內容</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Item 5: MRT前往香格里拉 -->
-      <div class="timeline-item" data-category="transit" id="item-5">
-        <div class="timeline-dot"></div>
-        <div class="event-card">
-          <div class="card-top">
-            <span class="time-slot">⏰ 14:45 - 16:15</span>
-            <div class="card-actions">
-              <button class="check-btn" onclick="toggleItemComplete(5)">✓</button>
-            </div>
-          </div>
-          <h2 class="card-title">搭乘捷運（MRT）與輕軌/電車前往「香格里拉聖淘沙度假村」</h2>
-          
-          <div class="tag-list">
-            <span class="tag tag-transit">🚇 捷運轉乘</span>
-            <span class="tag tag-transit">🚊 聖淘沙輕軌</span>
-            <span class="tag tag-transit">🛺 免費海灘電車</span>
-          </div>
-
-          <p style="font-size:13px; color:var(--text-muted); margin-bottom:8px;">
-            全程含轉乘與等車約 80–90 分鐘，順向 4 步驟：
-          </p>
-
-          <div class="task-list">
-            <div class="task-item transit-step">
-              <div class="step-number">1</div>
-              <div class="task-text">從 <strong>Jewel B2 連通道</strong> 步行至 <strong>樟宜機場捷運站（CG2）</strong>。</div>
-            </div>
-            <div class="task-item transit-step">
-              <div class="step-number">2</div>
-              <div class="task-text">搭乘 2 站至 <strong>丹那美拉站（EW4）</strong>，走到對面月台轉乘<strong>綠線</strong>往市區方向。</div>
-            </div>
-            <div class="task-item transit-step">
-              <div class="step-number">3</div>
-              <div class="task-text">搭至 <strong>歐南園站（EW16）</strong> 轉乘<strong>紫線（NE1）</strong>至終點 <strong>港灣站/怡豐城（HarbourFront）</strong>。</div>
-            </div>
-            <div class="task-item transit-step">
-              <div class="step-number">4</div>
-              <div class="task-text">直上怡豐城 3 樓搭乘 <strong>聖淘沙輕軌（Sentosa Express）</strong> 至<strong>「海灘站（Beach Station）」</strong>，轉乘免費<strong>海灘電車（Beach Tram）</strong>或巴士直達香格里拉門口（Siloso Point）！</div>
-            </div>
-          </div>
-
-          <div class="card-footer">
-            <a href="https://maps.google.com/?q=Shangri-La+Rasa+Sentosa+Singapore" target="_blank" class="map-btn">
-              📍 聖淘沙香格里拉導航
-            </a>
-            <button class="expand-btn" onclick="copyCardContent('item-5')">📋 複製內容</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Item 6: 香格里拉 Check-in & Room Tour -->
-      <div class="timeline-item" data-category="shoot hotel" id="item-6">
-        <div class="timeline-dot"></div>
-        <div class="event-card">
-          <div class="card-top">
-            <span class="time-slot">⏰ 16:15 - 16:30</span>
-            <div class="card-actions">
-              <button class="check-btn" onclick="toggleItemComplete(6)">✓</button>
-            </div>
-          </div>
-          <h2 class="card-title">香格里拉 Check-in 影音特輯 🎬 ➡️ 房內 Room Tour 蜜月開箱</h2>
-          
-          <div class="tag-list">
-            <span class="tag tag-hotel">🏨 入住手續</span>
-            <span class="tag tag-shoot">🎬 蜜月 Room Tour</span>
-          </div>
-
-          <div class="task-list">
-            <div class="task-item shoot-task">
-              <div class="task-checkbox" onclick="toggleTask(this, 't6-1')">✓</div>
-              <div class="task-text">🎬 <strong>【大廳手拿鏡放大轉場】</strong>：大廳對準手拿鏡映出辦理 Check-in 的甜蜜笑容，推近放大切換大廳棕櫚景致！</div>
-            </div>
-            <div class="task-item shoot-task">
-              <div class="task-checkbox" onclick="toggleTask(this, 't6-2')">✓</div>
-              <div class="task-text">🎬 <strong>【椰林沙灘雙人邁步街拍】</strong>：前往客房路上的戶外陽光椰林步道前，拍攝兩位牽手推行李邁步前進的畫面！</div>
-            </div>
-            <div class="task-item shoot-task">
-              <div class="task-checkbox" onclick="toggleTask(this, 't6-3')">✓</div>
-              <div class="task-text">🎬 <strong>【沙灘邊定點拉走轉場】</strong>：在西樂索沙灘邊，一人站原地看鏡頭，另一人伸手將他/她拉出鏡頭，順暢切換至推開房門！</div>
-            </div>
-            <div class="task-item shoot-task">
-              <div class="task-checkbox" onclick="toggleTask(this, 't6-4')">✓</div>
-              <div class="task-text">🎬 <strong>【香格里拉 Room Tour 蜜月開箱】</strong>：一鏡到底拍攝推門入房、雙人特大床、蜜月備品，並一路推開陽台門展現無敵海景陽台！</div>
-            </div>
-            <div class="task-item">
-              <div class="task-checkbox" onclick="toggleTask(this, 't6-5')">✓</div>
-              <div class="task-text">💄 稍微補妝與休息整裝。</div>
-            </div>
-          </div>
-
-          <div class="card-footer">
-            <span style="font-size:12px; color:var(--text-muted)">海景陽台光線最佳時段</span>
-            <button class="expand-btn" onclick="copyCardContent('item-6')">📋 複製內容</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Item 7: 飯店前往卡丁車 -->
-      <div class="timeline-item" data-category="transit" id="item-7">
-        <div class="timeline-dot"></div>
-        <div class="event-card">
-          <div class="card-top">
-            <span class="time-slot">⏰ 16:30 - 16:45</span>
-            <div class="card-actions">
-              <button class="check-btn" onclick="toggleItemComplete(7)">✓</button>
-            </div>
-          </div>
-          <h2 class="card-title">飯店前往 HyperDrive 卡丁車賽場（約 12–15 分鐘）</h2>
-          
-          <div class="tag-list">
-            <span class="tag tag-transit">🛺 海灘電車</span>
-            <span class="tag tag-transit">🌴 西樂索海岸線</span>
-          </div>
-
-          <div class="task-list">
-            <div class="task-item transit-step">
-              <div class="task-checkbox" onclick="toggleTask(this, 't7-1')">✓</div>
-              <div class="task-text">🛺 <strong>【海灘電車微風漫遊】</strong>：飯店門口 Siloso Point 站搭乘<strong>免費海灘電車（Beach Tram）</strong>，沿西樂索海岸線直達巴拉灣海灘 HyperDrive 賽場！</div>
-            </div>
-          </div>
-
-          <div class="card-footer">
-            <a href="https://maps.google.com/?q=HyperDrive+Sentosa" target="_blank" class="map-btn">
-              📍 HyperDrive 導航
-            </a>
-            <button class="expand-btn" onclick="copyCardContent('item-7')">📋 複製內容</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Item 8: HyperDrive 卡丁車 -->
-      <div class="timeline-item" data-category="shoot" id="item-8">
-        <div class="timeline-dot"></div>
-        <div class="event-card">
-          <div class="card-top">
-            <span class="time-slot">⏰ 16:45 - 18:15</span>
-            <div class="card-actions">
-              <button class="check-btn" onclick="toggleItemComplete(8)">✓</button>
-            </div>
-          </div>
-          <h2 class="card-title">HyperDrive 卡丁車賽場 🏎️（鎖定預約 17:00 場次：熱血飆速 ＋ 雙轉場）</h2>
-          
-          <div class="tag-list">
-            <span class="tag tag-shoot">🏎️ 極速體驗</span>
-            <span class="tag tag-shoot">🎬 賽道卡點轉場</span>
-          </div>
-
-          <div class="task-list">
-            <div class="task-item">
-              <div class="task-checkbox" onclick="toggleTask(this, 't8-1')">✓</div>
-              <div class="task-text">位於聖淘沙巴拉灣海灘（Palawan Beach），展開熱血暢快的高質感室內卡丁車極速體驗！</div>
-            </div>
-            <div class="task-item shoot-task">
-              <div class="task-checkbox" onclick="toggleTask(this, 't8-2')">✓</div>
-              <div class="task-text">🎬 <strong>【手拿鏡放大轉場】</strong>：在賽道旁或卡丁車前，對準手拿鏡映出頭戴賽車安全帽的酷帥造型，快速推近放大切換霓虹賽道全景！</div>
-            </div>
-            <div class="task-item shoot-task">
-              <div class="task-checkbox" onclick="toggleTask(this, 't8-3')">✓</div>
-              <div class="task-text">🎬 <strong>【定點拉走轉場】</strong>：在準備區車輛旁，一人站原地看向鏡頭，另一個人伸手將他/她拉出鏡頭、邁步走向卡丁車！</div>
-            </div>
-          </div>
-
-          <div class="card-footer">
-            <a href="https://maps.google.com/?q=HyperDrive+Palawan+Sentosa" target="_blank" class="map-btn">
-              📍 賽場地點
-            </a>
-            <button class="expand-btn" onclick="copyCardContent('item-8')">📋 複製內容</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Item 9: 松發肉骨茶 -->
-      <div class="timeline-item" data-category="food transit" id="item-9">
-        <div class="timeline-dot"></div>
-        <div class="event-card">
-          <div class="card-top">
-            <span class="time-slot">⏰ 18:15 - 20:00</span>
-            <div class="card-actions">
-              <button class="check-btn" onclick="toggleItemComplete(9)">✓</button>
-            </div>
-          </div>
-          <h2 class="card-title">怡豐城（VivoCity）松發肉骨茶 🥣</h2>
-          
-          <div class="tag-list">
-            <span class="tag tag-food">🥣 潮州胡椒肉骨茶</span>
-            <span class="tag tag-food">🍵 無限續熱湯</span>
-          </div>
-
-          <div class="task-list">
-            <div class="task-item transit-step">
-              <div class="task-checkbox" onclick="toggleTask(this, 't9-1')">✓</div>
-              <div class="task-text">從 Palawan Beach 站搭乘海灘電車至海灘站，轉乘聖淘沙輕軌返回怡豐城（車程＋換乘約 20 分鐘）。</div>
-            </div>
-            <div class="task-item food-task">
-              <div class="task-checkbox" onclick="toggleTask(this, 't9-2')">✓</div>
-              <div class="task-text">約 18:40 抵達松發肉骨茶享用招牌<strong>潮州式胡椒肉骨茶（免費無限續熱湯）</strong>，賽車後的體力瞬間滿血復活！</div>
-            </div>
-          </div>
-
-          <div class="card-footer">
-            <a href="https://maps.google.com/?q=Song+Fa+Bak+Kut+Teh+VivoCity" target="_blank" class="map-btn">
-              📍 怡豐城松發導航
-            </a>
-            <button class="expand-btn" onclick="copyCardContent('item-9')">📋 複製內容</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Item 10: 返回飯店 -->
-      <div class="timeline-item" data-category="transit hotel" id="item-10">
-        <div class="timeline-dot"></div>
-        <div class="event-card">
-          <div class="card-top">
-            <span class="time-slot">⏰ 20:00 之後</span>
-            <div class="card-actions">
-              <button class="check-btn" onclick="toggleItemComplete(10)">✓</button>
-            </div>
-          </div>
-          <h2 class="card-title">返回香格里拉聖淘沙度假村（沉浸放鬆前夜）</h2>
-          
-          <div class="tag-list">
-            <span class="tag tag-hotel">🌴 海岸夜景</span>
-            <span class="tag tag-transit">🚢 迪士尼登船前夜</span>
-          </div>
-
-          <div class="task-list">
-            <div class="task-item transit-step">
-              <div class="task-checkbox" onclick="toggleTask(this, 't10-1')">✓</div>
-              <div class="task-text">🚆 <strong>【輕軌＋電車回飯店】</strong>：怡豐城 3 樓搭聖淘沙輕軌至「海灘站」➔ 轉乘免費海灘電車/巴士直達香格里拉門口（約 15–20 分鐘；輕軌營運至 24:00，海灘電車至 22:00/22:30）。</div>
-            </div>
-            <div class="task-item">
-              <div class="task-checkbox" onclick="toggleTask(this, 't10-2')">✓</div>
-              <div class="task-text">🧳 飯店開箱整理隨身登船包、享受度假村晚間海岸氛圍，早早休息養精蓄銳，準備迎接隔天<strong>迪士尼探險號（Disney Adventure）登船</strong>！</div>
-            </div>
-          </div>
-
-          <div class="card-footer">
-            <a href="https://maps.google.com/?q=Shangri-La+Rasa+Sentosa+Singapore" target="_blank" class="map-btn">
-              📍 香格里拉飯店
-            </a>
-            <button class="expand-btn" onclick="copyCardContent('item-10')">📋 複製內容</button>
-          </div>
-        </div>
-      </div>
-
+      <!-- Items dynamically rendered by JS -->
     </div>
   </div>
 
   <!-- Bottom Floating Dock -->
-  <div class="bottom-dock">
+  <div class="bottom-dock" id="bottom-dock">
     <button class="dock-btn" onclick="scrollToElement('item-1')">
       <span class="dock-icon">🛫</span>
       <span>機場</span>
@@ -1264,25 +838,55 @@
     </button>
   </div>
 
-  <!-- Modal: Shooting Tips & Guide -->
+  <!-- Modal: Google Sheet Cloud Sync -->
+  <div class="modal-overlay" id="cloud-modal" onclick="closeModalOnBg(event, 'cloud-modal')">
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <h3 class="modal-title">📊 Google Sheet 資料庫設定</h3>
+      
+      <div class="tip-box">
+        <strong>☁️ 雲端同步保障：</strong>
+        <p style="margin-top:4px; font-size:12px; color:var(--text-muted);">
+          勾選打卡時會即時存到手機本地，並自動同步到 Google 試算表，兩人共用進度絕不丟失！
+        </p>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">🔗 Google Apps Script 網頁應用程式網址 (Web App URL)</label>
+        <input type="text" id="cloud-api-url" class="text-input" placeholder="https://script.google.com/macros/s/.../exec">
+      </div>
+
+      <div style="font-size:12px; color:var(--text-muted); line-height:1.5; margin-bottom:12px;">
+        📌 <strong>試算表位址：</strong><br>
+        <a href="https://docs.google.com/spreadsheets/d/1i3Wa7EoNEEmZRHUSDXKVfwYTVVqhzDyQnZUQVvcdjmA/edit?gid=0#gid=0" target="_blank" style="color:var(--primary); word-break:break-all;">
+          點此開啟你的 Google 試算表
+        </a>
+      </div>
+
+      <button class="btn-full" onclick="saveCloudSettings()">儲存並測試連線</button>
+      <button class="btn-full" style="background:var(--border); color:var(--text-main); margin-top:8px;" onclick="closeModal('cloud-modal')">關閉</button>
+    </div>
+  </div>
+
+  <!-- Modal: Shooting Tips -->
   <div class="modal-overlay" id="tips-modal" onclick="closeModalOnBg(event, 'tips-modal')">
     <div class="modal-sheet">
       <div class="modal-handle"></div>
       <h3 class="modal-title">🎬 影音轉場三大核心招式</h3>
       
       <div class="tip-box">
-        <strong>1. 手拿鏡放大轉場 (3次連貫)</strong>
+        <strong>1. 手拿鏡放大轉場 (連貫轉場)</strong>
         <p style="margin-top:4px; font-size:12px; color:var(--text-muted);">
           桃園落地窗 ➔ 星耀瀑布 ➔ 香格里拉大廳 ➔ 卡丁車。<br>
-          <strong>操作：</strong>手拿小鏡子照出兩人或特寫，鏡頭快速推向鏡面全屏，剪輯時在推滿瞬間卡點切換下一幕大景！
+          <strong>操作：</strong>手拿鏡映出兩人合照，鏡頭急速推向鏡面，剪輯時在推滿瞬間切換下一幕大景！
         </p>
       </div>
 
       <div class="tip-box" style="border-left-color: var(--accent); background: var(--accent-soft);">
-        <strong style="color:var(--accent);">2. 牽手邁步街拍 (前後呼應)</strong>
+        <strong style="color:var(--accent);">2. 雙人邁步街拍 (前後呼應)</strong>
         <p style="margin-top:4px; font-size:12px; color:var(--text-muted);">
           桃園文學之牆 ➔ 星耀瀑布觀景台 ➔ 香格里拉椰林步道。<br>
-          <strong>操作：</strong>兩人牽手、推行李向前走，攝影在側前方或後方跟拍 3-4 步，保持相同步伐頻率剪輯最絲滑！
+          <strong>操作：</strong>兩人牽手推行李邁步前進，攝影在側前方或後方跟拍 3-4 步，保持相同步伐節奏。
         </p>
       </div>
 
@@ -1290,7 +894,7 @@
         <strong style="color:var(--purple);">3. 定點拉走轉場 (瞬移感)</strong>
         <p style="margin-top:4px; font-size:12px; color:var(--text-muted);">
           桃園文學之牆 ➔ 星耀瀑布 ➔ 西樂索沙灘 ➔ 賽車準備區。<br>
-          <strong>操作：</strong>一人站原地不動看向鏡頭，另一人從側邊伸手猛然將他/她拉出鏡頭外，下一幕同方向被拉入新景點！
+          <strong>操作：</strong>一人站原地看鏡頭，另一人伸手將他/她拉出鏡頭外，下一幕同方向被拉入新景點！
         </p>
       </div>
 
@@ -1307,8 +911,8 @@
         用手機相機掃描下方 QR Code，或點擊複製連結分享給旅伴！
       </p>
 
-      <div class="qr-container">
-        <img id="qr-image" class="qr-code-img" src="" alt="QR Code" />
+      <div style="text-align:center; padding:16px; background:#f1f5f9; border-radius:16px; margin:12px 0;">
+        <img id="qr-image" style="width:190px; height:190px; border-radius:12px; background:#fff; padding:6px;" src="" alt="QR Code" />
         <p id="share-url-text" style="font-size:11px; color:#64748b; margin-top:8px; word-break:break-all;"></p>
       </div>
 
@@ -1318,17 +922,322 @@
   </div>
 
   <script>
-    // App State Management via LocalStorage
-    const STORAGE_KEY_ITEMS = 'sg_trip_day1_completed_items';
-    const STORAGE_KEY_TASKS = 'sg_trip_day1_tasks';
+    // Trip Data Structure (Multi-Day ready!)
+    const TRIP_DATA = {
+      "day1": {
+        title: "Day 1：10/21（三）桃園啟航 ＆ 聖淘沙香格里拉",
+        headerTitle: "桃園啟航 ✈️ 新加坡探險",
+        overviewTitle: "✨ Day 1 重點任務提醒",
+        overviewDesc: "桃園 05:00 報到 ➔ 星耀樟宜順向俯拍瀑布 ➔ 香格里拉海景蜜月 Room Tour ➔ 17:00 HyperDrive 霓虹賽車 ➔ 松發肉骨茶續湯補體力，備戰明天迪士尼郵輪！",
+        dockNav: [
+          { icon: "🛫", label: "機場", target: "item-1" },
+          { icon: "💎", label: "星耀", target: "item-4" },
+          { icon: "🏨", label: "香格里拉", target: "item-6" },
+          { icon: "🏎️", label: "賽車", target: "item-8" },
+          { icon: "🥣", label: "松發", target: "item-9" }
+        ],
+        items: [
+          {
+            id: 1,
+            time: "⏰ 05:00 - 08:00",
+            title: "桃園國際機場第二航廈（影音拍攝與順暢報到）",
+            categories: "shoot transit",
+            tags: [{ text: "🛫 機場報到", class: "tag-transit" }, { text: "🎬 影音開場特輯", class: "tag-shoot" }],
+            mapUrl: "https://maps.google.com/?q=桃園國際機場第二航廈",
+            mapLabel: "📍 桃園機場 T2 導航",
+            tasks: [
+              { id: "t1-1", type: "normal", text: "<strong>05:00</strong> 抵達第二航廈辦理星宇航空報到、托運行李並順暢通關。" },
+              { id: "t1-2", type: "shoot", text: "🎬 <strong>【手拿鏡放大轉場】</strong>：候機室落地窗前，對準手拿鏡映出兩位手持護照與機票甜蜜合照，鏡頭快速拉近放大。" },
+              { id: "t1-3", type: "shoot", text: "🎬 <strong>【雙人邁步街拍】</strong>：二航廈 D 區<strong>「文學之牆」</strong>前，拍攝兩人牽手推行李邁步前進的隨性流暢畫面。" },
+              { id: "t1-4", type: "shoot", text: "🎬 <strong>【定點拉走轉場】</strong>：<strong>「文學之牆」</strong>前，一個人站在原地看鏡頭，另一個人伸手將他/她拉出鏡頭外！" }
+            ]
+          },
+          {
+            id: 2,
+            time: "⏰ 08:00 - 12:40",
+            title: "星宇航空前往新加坡（高空雲霄 ＆ 縮時特輯）",
+            categories: "shoot transit",
+            tags: [{ text: "✈️ STARLUX", class: "tag-transit" }, { text: "🎬 起降縮時", class: "tag-shoot" }],
+            note: "航程約 4 小時 40 分",
+            tasks: [
+              { id: "t2-1", type: "shoot", text: "🎬 <strong>【起降窗景縮時 Time-lapse】</strong>：手機固定於舷窗，記錄桃園 08:00 起飛衝向雲霄，以及 12:40 降落新加坡俯瞰海岸線與雨林城市的震撼縮時！" },
+              { id: "t2-2", type: "normal", text: "🍱 飛行途中享用精緻機上餐，降落後無需額外吃午餐。" }
+            ]
+          },
+          {
+            id: 3,
+            time: "⏰ 12:40 - 13:40",
+            title: "樟宜機場第一航廈（T1）入境通關與提領行李",
+            categories: "transit",
+            tags: [{ text: "🛃 入境通關", class: "tag-transit" }, { text: "🧳 提領行李", class: "tag-transit" }],
+            mapUrl: "https://maps.google.com/?q=Changi+Airport+Terminal+1",
+            mapLabel: "📍 樟宜 T1 導航",
+            tasks: [
+              { id: "t3-1", type: "normal", text: "辦理入境通關手續與提領行李。" },
+              { id: "t3-2", type: "transit", text: "<strong>順向動線：</strong>出一樓抵達大廳（Arrival Hall），正對面即是星耀樟宜入口，直接步行步入！" }
+            ]
+          },
+          {
+            id: 4,
+            time: "⏰ 13:40 - 14:45",
+            title: "星耀樟宜（Jewel）雨林瀑布（由上往下順向動線：拍照＋影片）",
+            categories: "shoot food",
+            tags: [{ text: "📸 瀑布卡點拍", class: "tag-shoot" }, { text: "☕ 咖椰吐司", class: "tag-food" }, { text: "🛍️ 魚尾獅米奇", class: "tag-food" }],
+            mapUrl: "https://maps.google.com/?q=Jewel+Changi+Airport",
+            mapLabel: "📍 星耀樟宜導航",
+            subsections: [
+              {
+                title: "📍 拍攝地點 A：5 樓 Canopy Park 頂層觀景位（搭電梯直達 5 樓）",
+                tasks: [
+                  { id: "t4-a", type: "shoot", text: "📸 <strong>【雨林谷全景與輕軌同框】</strong>：俯瞰雨林谷全景，抓準高空輕軌（Skytrain）穿越瀑布瞬間，拍出震撼大片！" }
+                ]
+              },
+              {
+                title: "📍 拍攝地點 B：2 樓 / 3 樓中層觀景平台（核心影音基地）",
+                tasks: [
+                  { id: "t4-b1", type: "shoot", text: "📸 <strong>【水柱平視合照】</strong>：與直瀉而下的水柱平視合照（自然光充足，適合拍兩人牽手側影或半身美照）。" },
+                  { id: "t4-b2", type: "shoot", text: "🎬 <strong>【手拿鏡放大轉場】</strong>：平台欄杆前，手拿鏡滿版映出瀑布水流，鏡頭推近放大切換全景。" },
+                  { id: "t4-b3", type: "shoot", text: "🎬 <strong>【雙人邁步街拍】</strong>：平台前拍攝兩位牽手邁步行進畫面（作為桃園機場邁步的第二段卡點銜接）。" },
+                  { id: "t4-b4", type: "shoot", text: "🎬 <strong>【定點拉走轉場】</strong>：一人站原地看瀑布，另一人伸手拉出鏡頭外（作為桃園機場拉走的第二段卡點銜接）。" }
+                ]
+              },
+              {
+                title: "📍 採買地點 C：B1 樓 MINISO（電梯下至 B1 樓）",
+                tasks: [
+                  { id: "t4-c", type: "food", text: "🛍️ <strong>快閃採買：</strong>購入限定款「魚尾獅米奇」公仔！" }
+                ]
+              },
+              {
+                title: "📍 拍攝與美食地點 D：B2 樓水旋渦透明底座（電梯下至 B2 樓）",
+                tasks: [
+                  { id: "t4-d1", type: "shoot", text: "📸 <strong>【巨型水旋渦底座】</strong>：近距離觀賞水流在透明巨型圓柱內急速旋轉落下的科幻夢幻感。" },
+                  { id: "t4-d2", type: "food", text: "☕️ <strong>【美味彈性加碼：亞坤咖椰吐司】</strong>：若此時稍微有點餓，在 B2 亞坤點份香酥咖椰吐司與熱奶茶先墊墊胃！" }
+                ]
+              }
+            ]
+          },
+          {
+            id: 5,
+            time: "⏰ 14:45 - 16:15",
+            title: "搭乘捷運（MRT）與輕軌/電車前往「香格里拉聖淘沙度假村」",
+            categories: "transit",
+            tags: [{ text: "🚇 捷運轉乘", class: "tag-transit" }, { text: "🚊 聖淘沙輕軌", class: "tag-transit" }, { text: "🛺 免費海灘電車", class: "tag-transit" }],
+            mapUrl: "https://maps.google.com/?q=Shangri-La+Rasa+Sentosa+Singapore",
+            mapLabel: "📍 聖淘沙香格里拉導航",
+            note: "含轉乘等待約 80–90 分鐘",
+            steps: [
+              "從 <strong>Jewel B2 連通道</strong> 步行至 <strong>樟宜機場捷運站（CG2）</strong>。",
+              "搭乘 2 站至 <strong>丹那美拉站（EW4）</strong>，走到對面月台轉乘<strong>綠線</strong>往市區方向。",
+              "搭至 <strong>歐南園站（EW16）</strong> 轉乘<strong>紫線（NE1）</strong>至終點 <strong>港灣站/怡豐城（HarbourFront）</strong>。",
+              "直上怡豐城 3 樓搭乘 <strong>聖淘沙輕軌（Sentosa Express）</strong> 至<strong>「海灘站（Beach Station）」</strong>，轉乘免費<strong>海灘電車（Beach Tram）</strong>或巴士直達香格里拉度假村門口（Siloso Point）！"
+            ]
+          },
+          {
+            id: 6,
+            time: "⏰ 16:15 - 16:30",
+            title: "香格里拉 Check-in 影音特輯 🎬 ➡️ 房內 Room Tour 蜜月開箱",
+            categories: "shoot hotel",
+            tags: [{ text: "🏨 入住手續", class: "tag-hotel" }, { text: "🎬 蜜月 Room Tour", class: "tag-shoot" }],
+            note: "海景陽台光線最佳時段",
+            tasks: [
+              { id: "t6-1", type: "shoot", text: "🎬 <strong>【大廳手拿鏡放大轉場】</strong>：大廳對準手拿鏡映出辦理 Check-in 甜蜜笑容，推近放大切換大廳棕櫚景致！" },
+              { id: "t6-2", type: "shoot", text: "🎬 <strong>【椰林沙灘雙人邁步街拍】</strong>：前往客房路上戶外陽光椰林步道前，拍攝兩人牽手推行李邁步前進！" },
+              { id: "t6-3", type: "shoot", text: "🎬 <strong>【沙灘邊定點拉走轉場】</strong>：在西樂索沙灘邊，一人站原地看鏡頭，另一人伸手將他/她拉出鏡頭，順暢切換至推開房門！" },
+              { id: "t6-4", type: "shoot", text: "🎬 <strong>【香格里拉 Room Tour 蜜月開箱】</strong>：一鏡到底拍攝推門入房、雙人特大床、蜜月備品，並一路推開陽台門展現無敵海景陽台！" },
+              { id: "t6-5", type: "normal", text: "💄 稍微補妝與休息整裝。" }
+            ]
+          },
+          {
+            id: 7,
+            time: "⏰ 16:30 - 16:45",
+            title: "飯店前往 HyperDrive 卡丁車賽場（約 12–15 分鐘）",
+            categories: "transit",
+            tags: [{ text: "🛺 海灘電車", class: "tag-transit" }, { text: "🌴 西樂索海岸線", class: "tag-transit" }],
+            mapUrl: "https://maps.google.com/?q=HyperDrive+Sentosa",
+            mapLabel: "📍 HyperDrive 導航",
+            tasks: [
+              { id: "t7-1", type: "transit", text: "🛺 <strong>【海灘電車微風漫遊】</strong>：飯店門口 Siloso Point 站搭乘<strong>免費海灘電車（Beach Tram）</strong>，沿西樂索海岸線直達巴拉灣海灘 HyperDrive 賽場！" }
+            ]
+          },
+          {
+            id: 8,
+            time: "⏰ 16:45 - 18:15",
+            title: "HyperDrive 卡丁車賽場 🏎️（鎖定預約 17:00 場次：熱血飆速 ＋ 雙轉場）",
+            categories: "shoot",
+            tags: [{ text: "🏎️ 極速體驗", class: "tag-shoot" }, { text: "🎬 賽道卡點轉場", class: "tag-shoot" }],
+            mapUrl: "https://maps.google.com/?q=HyperDrive+Palawan+Sentosa",
+            mapLabel: "📍 賽場地點",
+            tasks: [
+              { id: "t8-1", type: "normal", text: "位於聖淘沙巴拉灣海灘（Palawan Beach），展開熱血暢快的高質感室內卡丁車極速體驗！" },
+              { id: "t8-2", type: "shoot", text: "🎬 <strong>【手拿鏡放大轉場】</strong>：賽道旁或卡丁車前，手拿鏡映出頭戴賽車安全帽酷帥造型，快速推近放大切換霓虹賽道全景！" },
+              { id: "t8-3", type: "shoot", text: "🎬 <strong>【定點拉走轉場】</strong>：準備區車輛旁，一人站原地看向鏡頭，另一人伸手將他/她拉出鏡頭、邁步走向卡丁車！" }
+            ]
+          },
+          {
+            id: 9,
+            time: "⏰ 18:15 - 20:00",
+            title: "怡豐城（VivoCity）松發肉骨茶 🥣",
+            categories: "food transit",
+            tags: [{ text: "🥣 潮州胡椒肉骨茶", class: "tag-food" }, { text: "🍵 無限續熱湯", class: "tag-food" }],
+            mapUrl: "https://maps.google.com/?q=Song+Fa+Bak+Kut+Teh+VivoCity",
+            mapLabel: "📍 怡豐城松發導航",
+            tasks: [
+              { id: "t9-1", type: "transit", text: "從 Palawan Beach 站搭乘海灘電車至海灘站，轉乘聖淘沙輕軌返回怡豐城（車程＋換乘約 20 分鐘）。" },
+              { id: "t9-2", type: "food", text: "約 18:40 抵達松發肉骨茶享用招牌<strong>潮州式胡椒肉骨茶（免費無限續熱湯）</strong>，賽車後的體力瞬間滿血復活！" }
+            ]
+          },
+          {
+            id: 10,
+            time: "⏰ 20:00 之後",
+            title: "返回香格里拉聖淘沙度假村（沉浸放鬆前夜）",
+            categories: "transit hotel",
+            tags: [{ text: "🌴 海岸夜景", class: "tag-hotel" }, { text: "🚢 迪士尼登船前夜", class: "tag-transit" }],
+            mapUrl: "https://maps.google.com/?q=Shangri-La+Rasa+Sentosa+Singapore",
+            mapLabel: "📍 香格里拉飯店",
+            tasks: [
+              { id: "t10-1", type: "transit", text: "🚆 <strong>【輕軌＋電車回飯店】</strong>：怡豐城 3 樓搭聖淘沙輕軌至「海灘站」➔ 轉乘免費海灘電車直達香格里拉門口（約 15–20 分鐘；輕軌至 24:00，海灘電車至 22:00/22:30）。" },
+              { id: "t10-2", type: "normal", text: "🧳 飯店開箱整理隨身登船包、享受度假村晚間海岸氛圍，早早休息養精蓄銳，準備迎接隔天<strong>迪士尼探險號（Disney Adventure）登船</strong>！" }
+            ]
+          }
+        ]
+      },
+      "day2": {
+        title: "Day 2：10/22（四）迪士尼探險號（Disney Adventure）啟航登船！",
+        headerTitle: "迪士尼探險號 🚢 登船日",
+        overviewTitle: "✨ Day 2 重點任務提醒",
+        overviewDesc: "香格里拉海景早餐 ➔ 前往濱海灣郵輪中心（Marina Bay Cruise Centre）➔ 辦理迪士尼探險號登船手續 ➔ 登船震撼影音大片 ➔ 探索夢幻客房與啟航派對！",
+        dockNav: [
+          { icon: "🍳", label: "早餐", target: "item-1" },
+          { icon: "🚢", label: "登船", target: "item-2" },
+          { icon: "✨", label: "客房", target: "item-3" }
+        ],
+        items: [
+          {
+            id: 1,
+            time: "⏰ 08:00 - 10:30",
+            title: "香格里拉聖淘沙晨光早餐 ＆ 退房準備",
+            categories: "food hotel",
+            tags: [{ text: "🍳 陽光早餐", class: "tag-food" }, { text: "🏨 退房整裝", class: "tag-hotel" }],
+            tasks: [
+              { id: "d2-1", type: "food", text: "享用香格里拉無敵海景早餐，慢條斯理享受熱帶度假氛圍。" },
+              { id: "d2-2", type: "normal", text: "10:30 前完成行李整理與退房手續，確認護照與郵輪登船憑證。" }
+            ]
+          },
+          {
+            id: 2,
+            time: "⏰ 10:30 - 12:30",
+            title: "前往新加坡濱海灣郵輪中心（MBCCS）＆ 辦理登船手續",
+            categories: "transit shoot",
+            tags: [{ text: "🚕 計程車直達", class: "tag-transit" }, { text: "🚢 迪士尼登船", class: "tag-shoot" }],
+            mapUrl: "https://maps.google.com/?q=Marina+Bay+Cruise+Centre+Singapore",
+            mapLabel: "📍 濱海灣郵輪中心導航",
+            tasks: [
+              { id: "d2-3", type: "transit", text: "從香格里拉搭乘 Grab / 計程車直達新加坡濱海灣郵輪中心（車程約 20 分鐘）。" },
+              { id: "d2-4", type: "shoot", text: "🎬 <strong>【初見巨輪縮時】</strong>：抵達郵輪碼頭時，仰拍迪士尼探險號（Disney Adventure）無敵壯觀船身！" },
+              { id: "d2-5", type: "normal", text: "托運行李、安檢並順暢通關，領取專屬房卡！" }
+            ]
+          },
+          {
+            id: 3,
+            time: "⏰ 12:30 之後",
+            title: "踏上迪士尼探險號 🏰 夢幻啟航派對 ＆ 房內開箱",
+            categories: "shoot food",
+            tags: [{ text: "🏰 迪士尼角色", class: "tag-shoot" }, { text: "🎉 啟航大派對", class: "tag-food" }],
+            tasks: [
+              { id: "d2-6", type: "shoot", text: "🎬 <strong>【踏上郵輪中庭轉場】</strong>：主持人喊出名字踏入豪華中庭的夢幻瞬間一鏡到底！" },
+              { id: "d2-7", type: "shoot", text: "🎬 <strong>【陽台海景開箱 Room Tour】</strong>：開箱迪士尼主題客房與無敵海景陽台。" },
+              { id: "d2-8", type: "shoot", text: "🎉 參加頂層甲板啟航歡慶派對（Sail-Away Party），與米奇米妮同框歡呼！" }
+            ]
+          }
+        ]
+      },
+      "day3": {
+        title: "Day 3：10/23（五）海上巡航 ＆ 迪士尼主題探索日",
+        headerTitle: "海上冒險 🌊 迪士尼巡航",
+        overviewTitle: "✨ Day 3 重點任務提醒",
+        overviewDesc: "海上日盡情探索船上 7 大特色主題區域，解鎖米奇特色美食、百老匯級音樂劇與水上滑道！",
+        dockNav: [],
+        items: [
+          {
+            id: 1,
+            time: "⏰ 全天巡航",
+            title: "迪士尼探險號海上巡航 ＆ 主題大秀",
+            categories: "shoot food",
+            tags: [{ text: "🎭 原創百老匯", class: "tag-shoot" }, { text: "🍔 主題餐廳輪換", class: "tag-food" }],
+            tasks: [
+              { id: "d3-1", type: "shoot", text: "📸 拍攝甲板無邊際海景與特色裝置藝術。" },
+              { id: "d3-2", type: "food", text: "享用迪士尼旋轉餐廳（Rotational Dining）獨家美饌。" },
+              { id: "d3-3", type: "shoot", text: "🎬 觀賞華特迪士尼劇院的頂級原創百老匯級大秀！" }
+            ]
+          }
+        ]
+      },
+      "day4": {
+        title: "Day 4：10/24（六）海上嘉年華 ＆ 煙火之夜",
+        headerTitle: "海上夜空 ✨ 燦爛之夜",
+        overviewTitle: "✨ Day 4 重點任務提醒",
+        overviewDesc: "享受海上泳池、角色見面會，以及甲板無敵海上煙火狂歡夜！",
+        dockNav: [],
+        items: [
+          {
+            id: 1,
+            time: "⏰ 全天探索",
+            title: "主題派對 ＆ 海上璀璨煙火",
+            categories: "shoot",
+            tags: [{ text: "🎆 海上煙火", class: "tag-shoot" }],
+            tasks: [
+              { id: "d4-1", type: "shoot", text: "📸 與迪士尼招牌角色合照見面會。" },
+              { id: "d4-2", type: "shoot", text: "🎬 記錄夜晚甲板燈光秀與絕美海上煙火綻放！" }
+            ]
+          }
+        ]
+      },
+      "day5": {
+        title: "Day 5：10/25（日）返航抵達新加坡 ＆ 依依不捨回程",
+        headerTitle: "平安返航 ✈️ 滿載回憶",
+        overviewTitle: "✨ Day 5 重點任務提醒",
+        overviewDesc: "享用最後船上早餐 ➔ 依序下船 ➔ 樟宜機場採買伴手禮 ➔ 滿載美好回憶搭機返台！",
+        dockNav: [],
+        items: [
+          {
+            id: 1,
+            time: "⏰ 08:00 - 14:00",
+            title: "靠港下船 ＆ 機場搭機回國",
+            categories: "transit",
+            tags: [{ text: "🛃 靠港離船", class: "tag-transit" }, { text: "🛫 返抵桃園", class: "tag-transit" }],
+            tasks: [
+              { id: "d5-1", type: "normal", text: "依指定時間領取行李並辦理下船通關。" },
+              { id: "d5-2", type: "transit", text: "前往樟宜機場辦理登機與最後免稅採購。" }
+            ]
+          }
+        ]
+      }
+    };
 
-    let completedItems = JSON.parse(localStorage.getItem(STORAGE_KEY_ITEMS) || '[]');
-    let completedTasks = JSON.parse(localStorage.getItem(STORAGE_KEY_TASKS) || '[]');
+    // Global State
+    let currentDay = 'day1';
+    let currentFilter = 'all';
+    
+    // Cloud Sync Configuration
+    let cloudApiUrl = localStorage.getItem('sg_cloud_api_url') || '';
+    
+    // Check Status Store: { taskId: boolean, itemId_day: boolean }
+    const STORAGE_KEY_STATE = 'sg_trip_task_state_v2';
+    let taskState = JSON.parse(localStorage.getItem(STORAGE_KEY_STATE) || '{}');
 
+    // On DOM Ready
     document.addEventListener('DOMContentLoaded', () => {
-      renderState();
-      updateBadgeCounts();
+      // Check URL query parameters for api link (easy sharing)
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('api')) {
+        cloudApiUrl = decodeURIComponent(params.get('api'));
+        localStorage.setItem('sg_cloud_api_url', cloudApiUrl);
+      }
+
+      document.getElementById('cloud-api-url').value = cloudApiUrl;
       setupQrCode();
+      renderDay(currentDay);
+      initCloudSync();
     });
 
     function showToast(msg) {
@@ -1340,89 +1249,214 @@
       }, 1800);
     }
 
-    function toggleItemComplete(id) {
-      const idx = completedItems.indexOf(id);
-      if (idx > -1) {
-        completedItems.splice(idx, 1);
-        showToast('↩️ 取消標記行程 ' + id);
-      } else {
-        completedItems.push(id);
-        showToast('✅ 已完成行程 ' + id);
+    // Switch Day View
+    function switchDay(dayKey, btn) {
+      currentDay = dayKey;
+      document.querySelectorAll('.day-tab-pill').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+
+      const data = TRIP_DATA[dayKey];
+      if (data) {
+        document.getElementById('page-day-title').innerText = data.headerTitle;
+        document.getElementById('overview-badge-title').innerText = data.overviewTitle;
+        document.getElementById('overview-badge-desc').innerText = data.overviewDesc;
+        document.getElementById('progress-day-label').innerText = `${dayKey.toUpperCase()} 行程進度 Check-in`;
       }
-      localStorage.setItem(STORAGE_KEY_ITEMS, JSON.stringify(completedItems));
-      renderState();
+
+      renderDay(dayKey);
     }
 
-    function toggleTask(el, taskId) {
+    // Render Timeline Items for the selected day
+    function renderDay(dayKey) {
+      const container = document.getElementById('timeline-container');
+      const data = TRIP_DATA[dayKey];
+      if (!data || !data.items) {
+        container.innerHTML = '<div style="text-align:center; padding:40px; color:#94a3b8;">此天行程規劃中...</div>';
+        return;
+      }
+
+      let html = '';
+      data.items.forEach(item => {
+        const itemStateKey = `${dayKey}_item_${item.id}`;
+        const isItemDone = !!taskState[itemStateKey];
+
+        let tagsHtml = (item.tags || []).map(t => `<span class="tag ${t.class}">${t.text}</span>`).join('');
+        
+        // Tasks or Subsections or Steps
+        let tasksHtml = '';
+
+        if (item.subsections) {
+          item.subsections.forEach(sub => {
+            tasksHtml += `<div class="location-subcard">
+              <div class="location-subtitle">${sub.title}</div>
+              <div class="task-list">`;
+            sub.tasks.forEach(t => {
+              const isChecked = !!taskState[t.id];
+              const taskClass = t.type === 'shoot' ? 'shoot-task' : (t.type === 'food' ? 'food-task' : '');
+              tasksHtml += `
+                <div class="task-item ${taskClass}">
+                  <div class="task-checkbox ${isChecked ? 'checked' : ''}" onclick="toggleTask(this, '${t.id}', '${escapeQuotes(t.text)}', '${item.categories}')">✓</div>
+                  <div class="task-text ${isChecked ? 'strike' : ''}">${t.text}</div>
+                </div>`;
+            });
+            tasksHtml += `</div></div>`;
+          });
+        } else if (item.steps) {
+          tasksHtml += `<div class="task-list">`;
+          item.steps.forEach((step, idx) => {
+            const stepId = `${dayKey}_step_${item.id}_${idx+1}`;
+            const isChecked = !!taskState[stepId];
+            tasksHtml += `
+              <div class="task-item transit-step">
+                <div class="step-number">${idx+1}</div>
+                <div class="task-text">${step}</div>
+              </div>`;
+          });
+          tasksHtml += `</div>`;
+        } else if (item.tasks) {
+          tasksHtml += `<div class="task-list">`;
+          item.tasks.forEach(t => {
+            const isChecked = !!taskState[t.id];
+            const taskClass = t.type === 'shoot' ? 'shoot-task' : (t.type === 'food' ? 'food-task' : (t.type === 'transit' ? 'transit-step' : ''));
+            tasksHtml += `
+              <div class="task-item ${taskClass}">
+                <div class="task-checkbox ${isChecked ? 'checked' : ''}" onclick="toggleTask(this, '${t.id}', '${escapeQuotes(t.text)}', '${item.categories}')">✓</div>
+                <div class="task-text ${isChecked ? 'strike' : ''}">${t.text}</div>
+              </div>`;
+          });
+          tasksHtml += `</div>`;
+        }
+
+        let footerHtml = '';
+        if (item.mapUrl) {
+          footerHtml += `<a href="${item.mapUrl}" target="_blank" class="map-btn">${item.mapLabel || '📍 導航'}</a>`;
+        } else if (item.note) {
+          footerHtml += `<span style="font-size:12px; color:var(--text-muted)">${item.note}</span>`;
+        } else {
+          footerHtml += `<span></span>`;
+        }
+        footerHtml += `<button class="expand-btn" onclick="copyCardContent('item-${item.id}')">📋 複製內容</button>`;
+
+        html += `
+          <div class="timeline-item ${isItemDone ? 'completed' : ''}" data-category="${item.categories}" id="item-${item.id}">
+            <div class="timeline-dot"></div>
+            <div class="event-card">
+              <div class="card-top">
+                <span class="time-slot">${item.time}</span>
+                <button class="check-btn" onclick="toggleItemComplete('${itemStateKey}', ${item.id})">✓</button>
+              </div>
+              <h2 class="card-title">${item.title}</h2>
+              <div class="tag-list">${tagsHtml}</div>
+              ${tasksHtml}
+              <div class="card-footer">${footerHtml}</div>
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+      updateFilterVisibility();
+      updateBadgeCounts();
+      updateProgress();
+    }
+
+    function escapeQuotes(str) {
+      return (str || '').replace(/"/g, '&quot;').replace(/'/g, "\\'");
+    }
+
+    // Toggle Task status (Local-First + Cloud Sync)
+    function toggleTask(el, taskId, taskText, category) {
       const isChecked = el.classList.toggle('checked');
       const textElem = el.nextElementSibling;
       if (textElem) {
         textElem.classList.toggle('strike', isChecked);
       }
 
+      taskState[taskId] = isChecked;
+      saveLocalState();
+      updateProgress();
+
       if (isChecked) {
-        if (!completedTasks.includes(taskId)) completedTasks.push(taskId);
         showToast('🎯 任務打卡成功！');
       } else {
-        completedTasks = completedTasks.filter(t => t !== taskId);
         showToast('↩️ 已取消任務');
       }
-      localStorage.setItem(STORAGE_KEY_TASKS, JSON.stringify(completedTasks));
+
+      // Background cloud sync
+      syncToGoogleSheet({
+        day: currentDay.toUpperCase(),
+        id: taskId,
+        category: category || '任務',
+        title: cleanText(taskText || taskId),
+        checked: isChecked
+      });
     }
 
-    function renderState() {
-      // Items
-      for (let i = 1; i <= 10; i++) {
-        const itemEl = document.getElementById('item-' + i);
-        if (itemEl) {
-          if (completedItems.includes(i)) {
-            itemEl.classList.add('completed');
-          } else {
-            itemEl.classList.remove('completed');
-          }
-        }
+    // Toggle Entire Item complete
+    function toggleItemComplete(itemStateKey, itemId) {
+      const isDone = !taskState[itemStateKey];
+      taskState[itemStateKey] = isDone;
+      saveLocalState();
+
+      const el = document.getElementById('item-' + itemId);
+      if (el) {
+        el.classList.toggle('completed', isDone);
+      }
+      updateProgress();
+
+      if (isDone) {
+        showToast('✅ 行程打卡完成！');
+      } else {
+        showToast('↩️ 取消行程完成');
       }
 
-      // Tasks
-      document.querySelectorAll('.task-checkbox').forEach(box => {
-        const onclickAttr = box.getAttribute('onclick') || '';
-        const match = onclickAttr.match(/'([^']+)'/);
-        if (match && match[1]) {
-          const tid = match[1];
-          const isDone = completedTasks.includes(tid);
-          box.classList.toggle('checked', isDone);
-          const next = box.nextElementSibling;
-          if (next) next.classList.toggle('strike', isDone);
-        }
+      // Cloud sync
+      syncToGoogleSheet({
+        day: currentDay.toUpperCase(),
+        id: itemStateKey,
+        category: '整段行程',
+        title: `行程 #${itemId} 完成狀態`,
+        checked: isDone
+      });
+    }
+
+    function cleanText(htmlStr) {
+      const tmp = document.createElement('div');
+      tmp.innerHTML = htmlStr;
+      return tmp.textContent || tmp.innerText || '';
+    }
+
+    function saveLocalState() {
+      localStorage.setItem(STORAGE_KEY_STATE, JSON.stringify(taskState));
+    }
+
+    function updateProgress() {
+      const dayData = TRIP_DATA[currentDay];
+      if (!dayData || !dayData.items) return;
+
+      const total = dayData.items.length;
+      let count = 0;
+      dayData.items.forEach(item => {
+        if (taskState[`${currentDay}_item_${item.id}`]) count++;
       });
 
-      // Progress bar
-      const total = 10;
-      const count = completedItems.length;
       const percent = Math.round((count / total) * 100);
       document.getElementById('progress-bar').style.width = percent + '%';
       document.getElementById('progress-percent').innerText = `${percent}% (${count}/${total})`;
     }
 
-    function resetAllProgress() {
-      if (confirm('確定要重設所有已完成的行程打卡與拍攝任務進度嗎？')) {
-        completedItems = [];
-        completedTasks = [];
-        localStorage.removeItem(STORAGE_KEY_ITEMS);
-        localStorage.removeItem(STORAGE_KEY_TASKS);
-        renderState();
-        showToast('🔄 已重置所有進度');
-      }
-    }
-
     function setFilter(type, btn) {
+      currentFilter = type;
       document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
       btn.classList.add('active');
+      updateFilterVisibility();
+    }
 
+    function updateFilterVisibility() {
       const items = document.querySelectorAll('.timeline-item');
       items.forEach(item => {
         const cat = item.getAttribute('data-category') || '';
-        if (type === 'all' || cat.includes(type)) {
+        if (currentFilter === 'all' || cat.includes(currentFilter)) {
           item.style.display = 'block';
         } else {
           item.style.display = 'none';
@@ -1440,19 +1474,102 @@
       document.getElementById('count-food').innerText = food;
     }
 
+    // Google Sheets Cloud Sync API
+    function initCloudSync() {
+      const badge = document.getElementById('sync-badge');
+      const text = document.getElementById('sync-text');
+      const icon = document.getElementById('sync-icon');
+
+      if (!cloudApiUrl) {
+        badge.className = 'sync-status-badge';
+        text.innerText = '本機離線模式 (點此接Google Sheet)';
+        icon.innerText = '📱';
+        return;
+      }
+
+      badge.className = 'sync-status-badge syncing';
+      text.innerText = '連線雲端中...';
+      icon.innerText = '⏳';
+
+      fetch(cloudApiUrl + '?action=get')
+        .then(res => res.json())
+        .then(res => {
+          if (res && res.tasks) {
+            // Merge cloud state into local state
+            Object.assign(taskState, res.tasks);
+            saveLocalState();
+            renderDay(currentDay);
+
+            badge.className = 'sync-status-badge synced';
+            text.innerText = '雲端已同步';
+            icon.innerText = '☁️';
+          }
+        })
+        .catch(err => {
+          console.warn('Cloud fetch warning:', err);
+          badge.className = 'sync-status-badge';
+          text.innerText = '雲端連線失敗 (使用本機快取)';
+          icon.innerText = '⚠️';
+        });
+    }
+
+    function syncToGoogleSheet(payload) {
+      if (!cloudApiUrl) return;
+
+      const badge = document.getElementById('sync-badge');
+      const text = document.getElementById('sync-text');
+      const icon = document.getElementById('sync-icon');
+
+      badge.className = 'sync-status-badge syncing';
+      text.innerText = '同步中...';
+      icon.innerText = '⏳';
+
+      // Send to Apps Script Web App
+      fetch(cloudApiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      })
+      .then(res => res.json())
+      .then(res => {
+        badge.className = 'sync-status-badge synced';
+        text.innerText = '雲端已同步';
+        icon.innerText = '☁️';
+      })
+      .catch(err => {
+        console.warn('Sync failed:', err);
+        badge.className = 'sync-status-badge';
+        text.innerText = '離線暫存中 (已保存在手機)';
+        icon.innerText = '📱';
+      });
+    }
+
+    function saveCloudSettings() {
+      const input = document.getElementById('cloud-api-url').value.trim();
+      cloudApiUrl = input;
+      localStorage.setItem('sg_cloud_api_url', cloudApiUrl);
+      closeModal('cloud-modal');
+      showToast('💾 雲端設定已儲存！');
+      initCloudSync();
+    }
+
+    function resetAllProgress() {
+      if (confirm('確定要重設當前天數的打卡進度嗎？')) {
+        taskState = {};
+        localStorage.removeItem(STORAGE_KEY_STATE);
+        renderDay(currentDay);
+        showToast('🔄 已重置所有進度');
+      }
+    }
+
     function scrollToElement(id) {
       const el = document.getElementById(id);
       if (el) {
         const offset = 140;
         const bodyRect = document.body.getBoundingClientRect().top;
         const elementRect = el.getBoundingClientRect().top;
-        const elementPosition = elementRect - bodyRect;
-        const offsetPosition = elementPosition - offset;
-
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth'
-        });
+        const offsetPosition = (elementRect - bodyRect) - offset;
+        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
       }
     }
 
@@ -1462,32 +1579,17 @@
         const title = card.querySelector('.card-title')?.innerText || '';
         const time = card.querySelector('.time-slot')?.innerText || '';
         const tasks = Array.from(card.querySelectorAll('.task-text')).map(t => '• ' + t.innerText).join('\n');
-        const text = `${time} ${title}\n${tasks}`;
-        navigator.clipboard.writeText(text).then(() => {
-          showToast('📋 已複製卡片內容至剪貼簿');
-        }).catch(() => {
-          showToast('已複製！');
+        navigator.clipboard.writeText(`${time} ${title}\n${tasks}`).then(() => {
+          showToast('📋 已複製卡片內容');
         });
       }
     }
 
-    function openTipsModal() {
-      document.getElementById('tips-modal').classList.add('show');
-    }
-
-    function openShareModal() {
-      document.getElementById('share-modal').classList.add('show');
-    }
-
-    function closeModal(id) {
-      document.getElementById(id).classList.remove('show');
-    }
-
-    function closeModalOnBg(e, id) {
-      if (e.target.id === id) {
-        closeModal(id);
-      }
-    }
+    function openTipsModal() { document.getElementById('tips-modal').classList.add('show'); }
+    function openCloudModal() { document.getElementById('cloud-modal').classList.add('show'); }
+    function openShareModal() { document.getElementById('share-modal').classList.add('show'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+    function closeModalOnBg(e, id) { if (e.target.id === id) closeModal(id); }
 
     function setupQrCode() {
       const currentUrl = window.location.href;
@@ -1497,11 +1599,8 @@
     }
 
     function copyCurrentUrl() {
-      const currentUrl = window.location.href;
-      navigator.clipboard.writeText(currentUrl).then(() => {
+      navigator.clipboard.writeText(window.location.href).then(() => {
         showToast('🔗 網址已複製！');
-      }).catch(() => {
-        showToast('已複製');
       });
     }
   </script>
