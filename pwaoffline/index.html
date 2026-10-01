@@ -7,7 +7,10 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="新加坡迪士尼特輯">
-  <title>新加坡 ＆ 迪士尼郵輪探險 - 旅遊影音手冊</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="icon" type="image/png" href="icons/icon-192.png">
+  <title>新加坡 ＆ 迪士尼郵輪探險 - 旅遊影音手冊 (離線 PWA 版)</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -684,6 +687,113 @@
       margin-bottom: 10px;
     }
 
+    /* Media Preview Button */
+    .media-preview-btn {
+      flex-shrink: 0;
+      background: linear-gradient(135deg, #f43f5e, #fb7185);
+      color: #ffffff;
+      border: none;
+      border-radius: 999px;
+      padding: 3px 8px;
+      font-size: 11px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(244, 63, 94, 0.35);
+      transition: all 0.2s ease;
+      margin-left: auto;
+    }
+    .media-preview-btn:hover, .media-preview-btn:active {
+      transform: scale(0.96);
+      background: #e11d48;
+    }
+
+    /* Lightbox Styles */
+    .lightbox-sheet {
+      max-height: 90vh;
+      padding-top: 14px;
+    }
+    .lightbox-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .lightbox-media-wrapper {
+      position: relative;
+      width: 100%;
+      min-height: 220px;
+      max-height: 380px;
+      background: #020617;
+      border-radius: 14px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+    .lightbox-media-wrapper video,
+    .lightbox-media-wrapper img {
+      width: 100%;
+      max-height: 380px;
+      object-fit: contain;
+      border-radius: 14px;
+    }
+    .lightbox-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 30px 20px;
+      text-align: center;
+      background: rgba(15, 23, 42, 0.05);
+      width: 100%;
+      border-radius: 14px;
+    }
+    .lightbox-speed-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(15, 23, 42, 0.04);
+      padding: 6px 10px;
+      border-radius: 10px;
+      margin-bottom: 12px;
+    }
+    .speed-chip {
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      color: var(--text-main);
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .speed-chip.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+    .lightbox-guide-card {
+      background: rgba(244, 63, 94, 0.06);
+      border-left: 3.5px solid var(--accent);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 12.5px;
+      line-height: 1.5;
+    }
+    .lightbox-guide-card .guide-title {
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+    .lightbox-guide-card .guide-content {
+      color: var(--text-main);
+    }
+
     .btn-full {
       width: 100%;
       padding: 13px;
@@ -945,6 +1055,47 @@
 
       <button class="btn-full" onclick="copyCurrentUrl()">📋 複製網頁連結</button>
       <button class="btn-full" style="background:var(--border); color:var(--text-main); margin-top:8px;" onclick="closeModal('share-modal')">關閉</button>
+    </div>
+  </div>
+
+  <!-- Modal: Media Lightbox Player -->
+  <div class="modal-overlay" id="media-lightbox-modal" onclick="closeModalOnBg(event, 'media-lightbox-modal')">
+    <div class="modal-sheet lightbox-sheet">
+      <div class="modal-handle"></div>
+      <div class="lightbox-header">
+        <h3 class="modal-title" id="lb-title" style="margin:0;">🎬 拍攝參考示範</h3>
+        <button class="icon-btn" onclick="closeModal('media-lightbox-modal')" style="background:var(--border); width:28px; height:28px; font-size:12px;">✖</button>
+      </div>
+
+      <!-- Video / Image Container -->
+      <div class="lightbox-media-wrapper">
+        <video id="lb-video" playsinline webkit-playsinline x5-playsinline controls loop muted preload="auto" style="display:none;"></video>
+        <img id="lb-image" style="display:none;" alt="拍攝參考截圖" />
+        <div id="lb-placeholder" class="lightbox-placeholder">
+          <div style="font-size:36px; margin-bottom:8px;">🎥</div>
+          <div id="lb-placeholder-text" style="font-weight:700; color:var(--text-main); font-size:14px; margin-bottom:4px;"></div>
+          <div style="font-size:12px; color:var(--text-muted); line-height:1.5;">
+            此處為離線影片播放區。<br>將下載好的 IG 影片存於 <code style="background:rgba(2,132,199,0.1); color:var(--primary); padding:2px 6px; border-radius:4px;" id="lb-file-hint">media/xxx.mp4</code> 即可秒開播放！
+          </div>
+        </div>
+      </div>
+
+      <!-- Playback Speed Controls & Audio Toggle for iOS -->
+      <div class="lightbox-speed-bar">
+        <span style="font-size:11px; font-weight:700; color:var(--text-muted);">播放速度：</span>
+        <button class="speed-chip" onclick="setLightboxSpeed(0.5, this)">0.5x 慢動作</button>
+        <button class="speed-chip active" onclick="setLightboxSpeed(1.0, this)">1.0x 正常</button>
+        <button class="speed-chip" onclick="setLightboxSpeed(1.5, this)">1.5x</button>
+        <button class="speed-chip" id="lb-mute-btn" onclick="toggleLightboxAudio()" style="margin-left:auto;">🔇 靜音</button>
+      </div>
+
+      <!-- Guide Text Card -->
+      <div class="lightbox-guide-card">
+        <div class="guide-title">📌 運鏡與拍照要點：</div>
+        <div id="lb-guide-text" class="guide-content"></div>
+      </div>
+
+      <button class="btn-full" style="background:var(--border); color:var(--text-main); margin-top:12px;" onclick="closeModal('media-lightbox-modal')">關閉預覽</button>
     </div>
   </div>
 
@@ -1321,10 +1472,12 @@
             sub.tasks.forEach(t => {
               const isChecked = !!taskState[t.id];
               const taskClass = t.type === 'shoot' ? 'shoot-task' : (t.type === 'food' ? 'food-task' : '');
+              const shootBtn = t.type === 'shoot' ? `<button class="media-preview-btn" onclick="event.stopPropagation(); openMediaLightbox('${t.id}', '${escapeQuotes(t.text)}')">🎬 示範</button>` : '';
               tasksHtml += `
                 <div class="task-item ${taskClass}">
                   <div class="task-checkbox ${isChecked ? 'checked' : ''}" onclick="toggleTask(this, '${t.id}', '${escapeQuotes(t.text)}', '${item.categories}', ${item.id})">✓</div>
                   <div class="task-text ${isChecked ? 'strike' : ''}">${t.text}</div>
+                  ${shootBtn}
                 </div>`;
             });
             tasksHtml += `</div></div>`;
@@ -1346,10 +1499,12 @@
           item.tasks.forEach(t => {
             const isChecked = !!taskState[t.id];
             const taskClass = t.type === 'shoot' ? 'shoot-task' : (t.type === 'food' ? 'food-task' : (t.type === 'transit' ? 'transit-step' : ''));
+            const shootBtn = t.type === 'shoot' ? `<button class="media-preview-btn" onclick="event.stopPropagation(); openMediaLightbox('${t.id}', '${escapeQuotes(t.text)}')">🎬 示範</button>` : '';
             tasksHtml += `
               <div class="task-item ${taskClass}">
                 <div class="task-checkbox ${isChecked ? 'checked' : ''}" onclick="toggleTask(this, '${t.id}', '${escapeQuotes(t.text)}', '${item.categories}', ${item.id})">✓</div>
                 <div class="task-text ${isChecked ? 'strike' : ''}">${t.text}</div>
+                ${shootBtn}
               </div>`;
           });
           tasksHtml += `</div>`;
@@ -1738,8 +1893,107 @@
     function openTipsModal() { document.getElementById('tips-modal').classList.add('show'); }
     function openCloudModal() { document.getElementById('cloud-modal').classList.add('show'); }
     function openShareModal() { document.getElementById('share-modal').classList.add('show'); }
-    function closeModal(id) { document.getElementById(id).classList.remove('show'); }
-    function closeModalOnBg(e, id) { if (e.target.id === id) closeModal(id); }
+    
+    function closeModal(id) { 
+      const modal = document.getElementById(id);
+      if (modal) modal.classList.remove('show');
+      if (id === 'media-lightbox-modal') {
+        const v = document.getElementById('lb-video');
+        if (v) {
+          v.pause();
+          v.src = '';
+        }
+      }
+    }
+
+    function closeModalOnBg(e, id) { 
+      if (e.target.id === id) closeModal(id); 
+    }
+
+    // Media Lightbox Controller
+    function openMediaLightbox(taskId, taskText) {
+      const modal = document.getElementById('media-lightbox-modal');
+      const lbVideo = document.getElementById('lb-video');
+      const lbImage = document.getElementById('lb-image');
+      const lbPlaceholder = document.getElementById('lb-placeholder');
+      const lbPlaceholderText = document.getElementById('lb-placeholder-text');
+      const lbFileHint = document.getElementById('lb-file-hint');
+      const lbGuideText = document.getElementById('lb-guide-text');
+
+      lbGuideText.innerHTML = taskText || '';
+      lbFileHint.innerText = `media/${taskId}.mp4`;
+      lbPlaceholderText.innerText = `拍攝任務 [${taskId}]`;
+
+      // Reset speed buttons
+      document.querySelectorAll('.speed-chip').forEach(c => c.classList.remove('active'));
+      const speedBtns = document.querySelectorAll('.speed-chip');
+      if (speedBtns[1]) speedBtns[1].classList.add('active'); // 1.0x
+
+      // Reset media display
+      lbVideo.style.display = 'none';
+      lbImage.style.display = 'none';
+      lbPlaceholder.style.display = 'flex';
+
+      lbVideo.pause();
+      lbVideo.playbackRate = 1.0;
+
+      const videoSrc = `media/${taskId}.mp4`;
+      const imgSrc = `media/${taskId}.jpg`;
+
+      // Try video first
+      lbVideo.src = videoSrc;
+      lbVideo.oncanplay = function() {
+        lbPlaceholder.style.display = 'none';
+        lbImage.style.display = 'none';
+        lbVideo.style.display = 'block';
+        lbVideo.play().catch(() => {});
+      };
+
+      lbVideo.onerror = function() {
+        // Fallback to image
+        const img = new Image();
+        img.onload = function() {
+          lbPlaceholder.style.display = 'none';
+          lbVideo.style.display = 'none';
+          lbImage.src = imgSrc;
+          lbImage.style.display = 'block';
+        };
+        img.onerror = function() {
+          // Neither exists, show helpful hint
+          lbPlaceholder.style.display = 'flex';
+          lbVideo.style.display = 'none';
+          lbImage.style.display = 'none';
+        };
+        img.src = imgSrc;
+      };
+
+      const muteBtn = document.getElementById('lb-mute-btn');
+      if (muteBtn) {
+        muteBtn.innerText = '🔇 靜音';
+        muteBtn.classList.remove('active');
+      }
+
+      modal.classList.add('show');
+    }
+
+    function toggleLightboxAudio() {
+      const v = document.getElementById('lb-video');
+      const btn = document.getElementById('lb-mute-btn');
+      if (v && btn) {
+        v.muted = !v.muted;
+        btn.innerText = v.muted ? '🔇 靜音' : '🔊 有聲';
+        btn.classList.toggle('active', !v.muted);
+      }
+    }
+
+    function setLightboxSpeed(speed, btn) {
+      const lbVideo = document.getElementById('lb-video');
+      if (lbVideo) {
+        lbVideo.playbackRate = speed;
+      }
+      document.querySelectorAll('.speed-chip:not(#lb-mute-btn)').forEach(c => c.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+    }
 
     function setupQrCode() {
       const currentUrl = window.location.href;
@@ -1751,6 +2005,19 @@
     function copyCurrentUrl() {
       navigator.clipboard.writeText(window.location.href).then(() => {
         showToast('🔗 網址已複製！');
+      });
+    }
+
+    // Register PWA Service Worker for Offline Capabilities
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(reg => {
+            console.log('[PWA] Service Worker registered with scope:', reg.scope);
+          })
+          .catch(err => {
+            console.warn('[PWA] Service Worker registration failed:', err);
+          });
       });
     }
   </script>
